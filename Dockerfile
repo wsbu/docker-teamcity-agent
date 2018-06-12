@@ -9,9 +9,11 @@ RUN systemctl disable docker
 ENV TC_AGENT_HOME="/opt/buildAgent"
 RUN wget --quiet -O /tmp/buildAgent.zip https://ci.redlion.net/update/buildAgent.zip && \
     mkdir /opt/buildAgent && \
+    pushd /opt/buildAgent && \
     unzip /tmp/buildAgent.zip && \
+    popd && \
     rm /tmp/buildAgent.zip && \
-    rm -f "${TC_AGENT_HOME}/conf"
+    rm -r "${TC_AGENT_HOME}/conf"
 
 COPY start-agent.sh "/start-agent.sh"
 RUN chmod +x "/start-agent.sh"
