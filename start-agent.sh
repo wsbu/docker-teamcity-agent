@@ -13,7 +13,7 @@ if [ ! -d "${work_dir}" ] ; then
 fi
 
 docker_socket="/var/run/docker.sock"
-if [ ! -f "${docker_socket}" ] ; then
+if [ ! -S "${docker_socket}" ] ; then
     echo "Could not find ${docker_socket}. Did you mount the docker socket from the host?"
     exit 3
 fi
