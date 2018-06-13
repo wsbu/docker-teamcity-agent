@@ -19,7 +19,7 @@ if [ ! -S "${docker_socket}" ] ; then
 fi
 
 if (( $# == 0 )); then
-	"/start.sh" "${TC_AGENT_HOME}/bin/agent.sh"
+	"/start.sh" "${TC_AGENT_HOME}/bin/agent.sh" "start"
     tail -F "${TC_AGENT_HOME}/logs/teamcity-agent.log"
 else
     set -e
