@@ -5,7 +5,7 @@ if [ ! -d "${conf_dir}" ] ; then
     echo "Could not find ${conf_dir}. Did you mount a volume with the configuration directory?"
     exit 1
 else
-    if [ -f "${conf_dir}/buildAgent.properties" ] ; then
+    if [ ! -f "${conf_dir}/buildAgent.properties" ] ; then
         echo "First-time startup detected. Copying from default configuration file."
         cp "${conf_dir}/buildAgent.dist.properties" "${conf_dir}/buildAgent.properties"
     fi
