@@ -1,8 +1,8 @@
 #!/bin/bash
 
-conf_file="${TC_AGENT_HOME}/conf/buildAgent.properties"
-if [ ! -f "${conf_file}" ] ; then
-    echo "Could not find ${conf_file}. Did you mount a volume with the configuration directory?"
+conf_dir="${TC_AGENT_HOME}/conf"
+if [ ! -d "${conf_dir}" ] ; then
+    echo "Could not find ${conf_dir}. Did you mount a volume with the configuration directory?"
     exit 1
 fi
 
@@ -19,8 +19,9 @@ if [ ! -S "${docker_socket}" ] ; then
 fi
 
 if (( $# == 0 )); then
+    set -e
 	"/start.sh" "${TC_AGENT_HOME}/bin/agent.sh" "start"
-    tail -F "${TC_AGENT_HOME}/logs/teamcity-agent.log"
+    "/watch-agent.py" "${TC_AGENT_HOME}/logs/teamcity-agent.log" "${TC_AGENT_HOME}/bin/agent.sh"
 else
     set -e
 	"/start.sh"
