@@ -4,7 +4,8 @@ RUN apt-get update && \
     apt-get install -y \
         docker.io \
         unzip \
-        openjdk-8-jre
+        openjdk-8-jre \
+        git-core
 RUN systemctl disable docker
 
 ENV TC_AGENT_HOME="/opt/buildAgent"
