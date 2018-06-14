@@ -23,6 +23,10 @@ if [ ! -S "${docker_socket}" ] ; then
     exit 3
 fi
 
+set -e
+service docker start
+set +e
+
 if (( $# == 0 )); then
     set -e
 	"/start.sh" "${TC_AGENT_HOME}/bin/agent.sh" "start"
