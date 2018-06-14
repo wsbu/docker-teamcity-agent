@@ -17,12 +17,6 @@ if [ ! -d "${work_dir}" ] ; then
     exit 2
 fi
 
-docker_socket="/var/run/docker.sock"
-if [ ! -S "${docker_socket}" ] ; then
-    echo "Could not find ${docker_socket}. Did you mount the docker socket from the host?"
-    exit 3
-fi
-
 set -e
 service docker start
 set +e
