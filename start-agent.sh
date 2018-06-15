@@ -17,6 +17,12 @@ if [ ! -d "${work_dir}" ] ; then
     exit 2
 fi
 
+# Make sure the log and work directories are accessible
+if [ "${uid}" -a "${gid}" ] ; then
+    chown "${uid}:${gid}" "${work_dir}"
+    chown "${uid}:${gid}" "${TC_AGENT_HOME}/logs"
+fi
+
 set -e
 service docker start
 set +e
