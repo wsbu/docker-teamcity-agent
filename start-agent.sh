@@ -18,8 +18,9 @@ if [ ! -d "${work_dir}" ] ; then
 fi
 
 mkdir -p "${TC_AGENT_HOME}/temp"
-# Make sure the log, work, and temp directories are accessible
+# Make sure the agent home, log, work, and temp directories are accessible
 if [ "${uid}" -a "${gid}" ] ; then
+    chown "${uid}:${gid}" "${TC_AGENT_HOME}"
     chown "${uid}:${gid}" "${work_dir}"
     chown "${uid}:${gid}" "${TC_AGENT_HOME}/logs"
     chown "${uid}:${gid}" "${TC_AGENT_HOME}/temp"
