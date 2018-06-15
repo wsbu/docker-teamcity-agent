@@ -25,6 +25,11 @@ if [ "${uid}" -a "${gid}" ] ; then
     chown "${uid}:${gid}" "${TC_AGENT_HOME}/temp"
 fi
 
+# Make sure some other directories are all properly owned (recursively)
+for d in bin contrib launcher lib plugins ; do
+    chown "${uid}:${gid}" "${TC_AGENT_HOME}/${d}" --recursive
+done
+
 set -e
 service docker start
 set +e
