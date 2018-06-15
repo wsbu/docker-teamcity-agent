@@ -21,7 +21,8 @@ RUN wget --quiet -O /tmp/buildAgent.zip https://ci.redlion.net/update/buildAgent
     unzip /tmp/buildAgent.zip && \
     popd && \
     rm /tmp/buildAgent.zip && \
-    rm -r "${TC_AGENT_HOME}/conf"
+    rm -r "${TC_AGENT_HOME}/conf" && \
+    chown 1000:1000 "${TC_AGENT_HOME}" --recursive
 
 COPY start-agent.sh "/start-agent.sh"
 COPY watch-agent.py "/watch-agent.py"

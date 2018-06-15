@@ -17,19 +17,11 @@ if [ ! -d "${work_dir}" ] ; then
     exit 2
 fi
 
-mkdir -p "${TC_AGENT_HOME}/temp"
 # Make sure the agent home, log, work, and temp directories are accessible
-if [ "${uid}" -a "${gid}" ] ; then
-    chown "${uid}:${gid}" "${TC_AGENT_HOME}"
-    chown "${uid}:${gid}" "${work_dir}"
-    chown "${uid}:${gid}" "${TC_AGENT_HOME}/logs"
-    chown "${uid}:${gid}" "${TC_AGENT_HOME}/temp"
+if [ "${uid}" != "1000" -o "${gid}" != "1000" ] ; then
+    echo "Agent must be run as UID 1000 with GID 1000!"
+    exit 3
 fi
-
-# Make sure some other directories are all properly owned (recursively)
-for d in bin contrib launcher lib plugins ; do
-    chown "${uid}:${gid}" "${TC_AGENT_HOME}/${d}" --recursive
-done
 
 set -e
 service docker start
