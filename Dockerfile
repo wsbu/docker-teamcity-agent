@@ -9,7 +9,8 @@ RUN apt-get update && \
         vim
 RUN systemctl disable docker
 
-RUN pip3 install \
+# Because we're running this after setting $HOME, we need to run with `sudo -H`
+RUN sudo -H pip install \
     boto3 \
     xmltodict
 
