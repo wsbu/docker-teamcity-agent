@@ -9,6 +9,10 @@ RUN apt-get update && \
         vim
 RUN systemctl disable docker
 
+RUN pip3 install \
+    boto3 \
+    xmltodict
+
 ENV TC_AGENT_HOME="/opt/buildAgent"
 RUN wget --quiet -O /tmp/buildAgent.zip https://ci.redlion.net/update/buildAgent.zip && \
     mkdir /opt/buildAgent && \
