@@ -8,6 +8,7 @@ RUN apt-get update && \
         git-core \
         vim
 RUN systemctl disable docker
+RUN usermod -a -G docker captain
 
 # Because we're running this after setting $HOME, we need to run with `sudo -H`
 RUN sudo -H pip install \
