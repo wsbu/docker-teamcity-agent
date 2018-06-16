@@ -6,12 +6,13 @@ RUN apt-get update && \
         unzip \
         openjdk-8-jre \
         git-core \
-        vim
+        vim \
+        python3-pip
 RUN systemctl disable docker
 RUN usermod -a -G docker captain
 
 # Because we're running this after setting $HOME, we need to run with `sudo -H`
-RUN sudo -H pip install \
+RUN sudo -H pip3 install \
     boto3 \
     xmltodict
 
