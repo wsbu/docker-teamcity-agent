@@ -14,7 +14,8 @@ RUN usermod -a -G docker captain
 # Because we're running this after setting $HOME, we need to run with `sudo -H`
 RUN sudo -H pip3 install \
     boto3 \
-    xmltodict
+    xmltodict \
+    paramiko
 
 ENV TC_AGENT_HOME="/opt/buildAgent"
 RUN wget --quiet -O /tmp/buildAgent.zip https://ci.redlion.net/update/buildAgent.zip && \
