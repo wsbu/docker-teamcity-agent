@@ -1,4 +1,4 @@
-FROM wsbu/toolchain-native:v0.1.5
+FROM wsbu/toolchain-native:v0.2.1
 
 RUN apt-get update && \
     apt-get install -y \
@@ -8,7 +8,6 @@ RUN apt-get update && \
         git-core \
         vim \
         python3-pip
-RUN systemctl disable docker
 RUN usermod -a -G docker captain
 
 # Because we're running this after setting $HOME, we need to run with `sudo -H`
