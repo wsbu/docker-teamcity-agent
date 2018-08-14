@@ -42,6 +42,7 @@ if [ "${uid}" != "1000" -o "${gid}" != "1000" ] ; then
     exit 3
 fi
 
+rm -rf "/var/run/docker.pid"
 set -e
 service docker start
 set +e

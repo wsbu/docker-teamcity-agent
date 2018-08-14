@@ -1,4 +1,4 @@
-FROM wsbu/toolchain-native:v0.2.1
+FROM wsbu/toolchain-native:v0.2.2
 
 RUN apt-get update && \
     apt-get install -y \
