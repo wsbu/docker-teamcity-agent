@@ -1,4 +1,4 @@
-FROM wsbu/toolchain-native:v0.2.3
+FROM wsbu/toolchain-native:v0.2.4
 
 RUN apt-get update && \
     apt-get install -y \
@@ -25,6 +25,10 @@ RUN wget --quiet -O /tmp/buildAgent.zip https://ci.redlion.net/update/buildAgent
     rm /tmp/buildAgent.zip && \
     rm -r "${TC_AGENT_HOME}/conf" && \
     chown 1000:1000 "${TC_AGENT_HOME}" --recursive
+
+RUN sudo wget --quiet -O /usr/local/bin/docker-compose \
+        https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)  && \
+    sudo chmod +x /usr/local/bin/docker-compose
 
 COPY start-agent.sh "/start-agent.sh"
 COPY watch-agent.py "/watch-agent.py"
