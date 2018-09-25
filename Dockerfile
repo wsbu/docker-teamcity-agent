@@ -8,13 +8,15 @@ RUN apt-get update && \
         git-core \
         vim \
         python3-pip
+
 RUN usermod -a -G docker captain
 
 # Because we're running this after setting $HOME, we need to run with `sudo -H`
 RUN sudo -H pip3 install \
     boto3 \
     xmltodict \
-    paramiko
+    paramiko \
+    conan==1.8.0.dev1
 
 ENV TC_AGENT_HOME="/opt/buildAgent"
 RUN wget --quiet -O /tmp/buildAgent.zip https://ci.redlion.net/update/buildAgent.zip && \
@@ -29,6 +31,11 @@ RUN wget --quiet -O /tmp/buildAgent.zip https://ci.redlion.net/update/buildAgent
 RUN sudo wget --quiet -O /usr/local/bin/docker-compose \
         https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)  && \
     sudo chmod +x /usr/local/bin/docker-compose
+
+VOLUME ${TC_AGENT_HOME}/conf
+VOLUME ${TC_AGENT_HOME}/work
+VOLUME ${TC_AGENT_HOME}/logs
+VOLUME ${HOME}/.conan/data
 
 COPY start-agent.sh "/start-agent.sh"
 COPY watch-agent.py "/watch-agent.py"
