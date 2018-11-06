@@ -16,7 +16,7 @@ RUN sudo -H pip3 install \
     boto3 \
     xmltodict \
     paramiko \
-    conan==1.8.0.dev1
+    conan==1.9.0
 
 ENV TC_AGENT_HOME="/opt/buildAgent"
 RUN wget --quiet -O /tmp/buildAgent.zip https://ci.redlion.net/update/buildAgent.zip && \
