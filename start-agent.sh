@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Make Docker usable
+dockerOnHostGid=$(stat -c '%g' /var/run/docker.sock)
+dockerInContainerGid=$(getent group docker | cut -d: -f3)
+if [[ "${dockerOnHostGid}" != "${dockerInContainerGid}" ]] ; then
+    groupadd -g ${dockerOnHostGid} dockerOnHost
+    usermod -a -G dockerOnHost captain
+fi
+
 # Make sure the agent home, log, work, and temp directories are accessible
 if [[ "${uid}" != "1000" || "${gid}" != "1000" ]] ; then
     echo "Agent must be run as UID 1000 with GID 1000!"
