@@ -33,7 +33,6 @@ RUN sudo wget --quiet -O /usr/local/bin/docker-compose \
     sudo chmod +x /usr/local/bin/docker-compose
 
 VOLUME ${TC_AGENT_HOME}/conf
-VOLUME ${TC_AGENT_HOME}/work
 VOLUME ${TC_AGENT_HOME}/logs
 VOLUME ${HOME}/.conan/data
 
