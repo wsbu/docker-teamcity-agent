@@ -45,6 +45,12 @@ fi
 
 chown "${uid}:${gid}" "${HOME}/.conan/data"
 
+# New Conan fails miserably if the JSON file is completely empty
+registry_size=$(stat --printf="%s" ${HOME}/.conan/registry.json)
+if [[ "0" == "${registry_size}" ]] ; then
+    echo -n '{"remotes": [], "references": {}, "package_references": {}}' >> "${HOME}/.conan/registry.json"
+fi
+
 # Ensure Conan is using the correct remotes (RL-specific remotes will be added by CI server)
 # Invoking all this via /start.sh is necessary so that we don't run as root
 remotes=$("/start.sh" conan remote list --raw | cut -d' ' -f2)
