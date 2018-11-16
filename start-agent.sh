@@ -46,7 +46,8 @@ fi
 chown "${uid}:${gid}" "${HOME}/.conan/data"
 
 # Ensure Conan is using the correct remotes (RL-specific remotes will be added by CI server)
-remotes=$(conan remote list --raw | cut -d' ' -f2)
+# Invoking all this via /start.sh is necessary so that we don't run as root
+remotes=$("/start.sh" conan remote list --raw | cut -d' ' -f2)
 if [[ ! "${remotes}" =~ .*'https://conan.bintray.com'.* ]] ; then
     "/start.sh" conan remote add conan-center 'https://conan.bintray.com'
 fi
