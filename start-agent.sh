@@ -45,16 +45,13 @@ fi
 
 chown "${uid}:${gid}" "${HOME}/.conan/data"
 
-# Ensure Conan is using the correct remotes
+# Ensure Conan is using the correct remotes (RL-specific remotes will be added by CI server)
 remotes=$(conan remote list --raw | cut -d' ' -f2)
 if [[ ! "${remotes}" =~ .*'https://conan.bintray.com'.* ]] ; then
-    conan remote add conan-center https://conan.bintray.com
+    "/start.sh" conan remote add conan-center 'https://conan.bintray.com'
 fi
 if [[ ! "${remotes}" =~ .*'https://api.bintray.com/conan/conan-community/conan'.* ]] ; then
-    conan remote add bintray-community https://api.bintray.com/conan/conan-community/conan
-fi
-if [[ ! "${remotes}" =~ .*'https://artifactory.redlion.net/artifactory/api/conan/conan-local'.* ]] ; then
-    conan remote add ci https://artifactory.redlion.net/artifactory/api/conan/conan-local
+    "/start.sh" conan remote add bintray-community 'https://api.bintray.com/conan/conan-community/conan'
 fi
 
 if (( $# == 0 )); then
