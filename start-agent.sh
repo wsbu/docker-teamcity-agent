@@ -51,7 +51,7 @@ if [[ "0" == "${registry_size}" ]] ; then
     echo -n '{"remotes": [], "references": {}, "package_references": {}}' >> "${HOME}/.conan/registry.json"
 fi
 
-# Ensure Conan is using the correct remotes (RL-specific remotes will be added by CI server)
+# Ensure Conan is using the correct remotes
 # Invoking all this via /start.sh is necessary so that we don't run as root
 remotes=$("/start.sh" conan remote list --raw | cut -d' ' -f2)
 if [[ ! "${remotes}" =~ .*'https://conan.bintray.com'.* ]] ; then
@@ -59,6 +59,9 @@ if [[ ! "${remotes}" =~ .*'https://conan.bintray.com'.* ]] ; then
 fi
 if [[ ! "${remotes}" =~ .*'https://api.bintray.com/conan/conan-community/conan'.* ]] ; then
     "/start.sh" conan remote add bintray-community 'https://api.bintray.com/conan/conan-community/conan'
+fi
+if [[ ! "${remotes}" =~ .*'https://artifactory.redlion.net/artifactory/api/conan/conan-local'.* ]] ; then
+    "/start.sh" conan remote add ci 'https://artifactory.redlion.net/artifactory/api/conan/conan-local'
 fi
 
 if (( $# == 0 )); then
