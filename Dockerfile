@@ -1,4 +1,4 @@
-FROM wsbu/toolchain-native:v0.2.9
+FROM wsbu/toolchain-native:v0.3.0
 
 RUN apt-get update && \
     apt-get install -y \
@@ -7,7 +7,8 @@ RUN apt-get update && \
         openjdk-8-jre \
         git-core \
         vim \
-        python3-pip
+        python3-pip \
+        valgrind
 
 RUN usermod -a -G docker captain
 

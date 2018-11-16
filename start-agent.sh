@@ -45,6 +45,18 @@ fi
 
 chown "${uid}:${gid}" "${HOME}/.conan/data"
 
+# Ensure Conan is using the correct remotes
+remotes=$(conan remote list --raw | cut -d' ' -f2)
+if [[ ! "${remotes}" =~ .*'https://conan.bintray.com'.* ]] ; then
+    conan remote add conan-center https://conan.bintray.com
+fi
+if [[ ! "${remotes}" =~ .*'https://api.bintray.com/conan/conan-community/conan'.* ]] ; then
+    conan remote add bintray-community https://api.bintray.com/conan/conan-community/conan
+fi
+if [[ ! "${remotes}" =~ .*'https://artifactory.redlion.net/artifactory/api/conan/conan-local'.* ]] ; then
+    conan remote add ci https://artifactory.redlion.net/artifactory/api/conan/conan-local
+fi
+
 if (( $# == 0 )); then
     set -e
 	"/start.sh" "${TC_AGENT_HOME}/bin/agent.sh" "start"
