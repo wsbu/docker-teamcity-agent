@@ -17,7 +17,8 @@ RUN sudo -H pip3 install \
     boto3 \
     xmltodict \
     paramiko \
-    conan==1.9.0
+    conan==1.11.2 \
+    conan_package_tools
 
 RUN sudo wget --quiet -O /usr/local/bin/docker-compose \
         https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)  && \
