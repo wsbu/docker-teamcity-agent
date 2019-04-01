@@ -1,4 +1,4 @@
-FROM wsbu/toolchain-native:v0.3.0
+FROM wsbu/toolchain-native:v0.3.1
 
 RUN apt-get update && \
     apt-get install -y \
@@ -13,11 +13,12 @@ RUN apt-get update && \
 RUN usermod -a -G docker captain
 
 # Because we're running this after setting $HOME, we need to run with `sudo -H`
+RUN sudo -H pip2 uninstall --yes conan
 RUN sudo -H pip3 install \
     boto3 \
     xmltodict \
     paramiko \
-    conan==1.11.2 \
+    conan==1.14.1 \
     conan_package_tools
 
 RUN sudo wget --quiet -O /usr/local/bin/docker-compose \
