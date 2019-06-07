@@ -47,9 +47,14 @@ chown "${uid}:${gid}" "${HOME}/.conan/data"
 
 # Ensure Conan is using the correct remote
 # Invoking all this via /start.sh is necessary so that we don't run as root
-remotes=$("/start.sh" conan remote list --raw | cut -d' ' -f2)
 expected_remote='https://artifactory.redlion.net/artifactory/api/conan/conan-rlc-virtual'
-if [[ ! "${remotes}" =~ .*"${expected_remote}".* ]] ; then
+if [[ -s "${HOME}/.conan/remotes.json" ]] ; then
+    remotes=$("/start.sh" conan remote list --raw | cut -d' ' -f2)
+    if [[ ! "${remotes}" =~ .*"${expected_remote}".* ]] ; then
+        "/start.sh" conan remote add ci "${expected_remote}"
+    fi
+else
+    echo "{}" >> "${HOME}/.conan/remotes.json"
     "/start.sh" conan remote add ci "${expected_remote}"
 fi
 
