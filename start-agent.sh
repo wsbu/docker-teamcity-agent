@@ -45,23 +45,12 @@ fi
 
 chown "${uid}:${gid}" "${HOME}/.conan/data"
 
-# New Conan fails miserably if the JSON file is completely empty
-registry_size=$(stat --printf="%s" ${HOME}/.conan/registry.json)
-if [[ "0" == "${registry_size}" ]] ; then
-    echo -n '{"remotes": [], "references": {}, "package_references": {}}' >> "${HOME}/.conan/registry.json"
-fi
-
-# Ensure Conan is using the correct remotes
+# Ensure Conan is using the correct remote
 # Invoking all this via /start.sh is necessary so that we don't run as root
 remotes=$("/start.sh" conan remote list --raw | cut -d' ' -f2)
-if [[ ! "${remotes}" =~ .*'https://conan.bintray.com'.* ]] ; then
-    "/start.sh" conan remote add conan-center 'https://conan.bintray.com'
-fi
-if [[ ! "${remotes}" =~ .*'https://api.bintray.com/conan/conan-community/conan'.* ]] ; then
-    "/start.sh" conan remote add bintray-community 'https://api.bintray.com/conan/conan-community/conan'
-fi
-if [[ ! "${remotes}" =~ .*'https://artifactory.redlion.net/artifactory/api/conan/conan-local'.* ]] ; then
-    "/start.sh" conan remote add ci 'https://artifactory.redlion.net/artifactory/api/conan/conan-local'
+expected_remote='https://artifactory.redlion.net/artifactory/api/conan/conan-rlc-virtual'
+if [[ ! "${remotes}" =~ .*"${expected_remote}".* ]] ; then
+    "/start.sh" conan remote add ci "${expected_remote}"
 fi
 
 if (( $# == 0 )); then
