@@ -1,5 +1,7 @@
 FROM wsbu/toolchain-native:v0.3.4
 
+ENV JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+
 RUN apt-get update && \
     apt-get install -y \
         docker.io \
