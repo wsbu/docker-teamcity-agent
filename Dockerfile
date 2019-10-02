@@ -3,6 +3,7 @@ FROM wsbu/toolchain-native:v0.3.5
 RUN apt-get update && \
     apt-get install -y \
         docker.io \
+        expect \
         unzip \
         openjdk-8-jre-headless \
         git-core \
