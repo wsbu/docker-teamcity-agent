@@ -17,7 +17,8 @@ RUN sudo -H pip3 install \
     boto3 \
     xmltodict \
     paramiko \
-    conan_package_tools
+    conan_package_tools \
+    teamcity-messages
 
 RUN sudo wget --quiet -O /usr/local/bin/docker-compose \
         https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)  && \
